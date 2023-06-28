@@ -23,11 +23,11 @@ $ yarn run start:prod
 
 ```bash
 # unit tests
-$ yarn run test
+$ yarn run tests
 
 # e2e tests
-$ yarn run test:e2e
+$ yarn run tests:e2e
 
-# test coverage
-$ yarn run test:cov
+# tests coverage
+$ yarn run tests:cov
 ```
