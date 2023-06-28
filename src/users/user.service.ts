@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -32,7 +32,7 @@ export class UsersService {
     if (existingUser) {
       return { message: 'User already exists' };
     } else {
-      return { error: 'User not found' };
+      throw new NotFoundException('User not found');
     }
   }
 
