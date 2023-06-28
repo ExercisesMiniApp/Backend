@@ -5,9 +5,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseService } from './database/database.service';
 
-// import { UsersController } from './users/users.controller';
-// import { UsersService } from './users/user.service';
-// import { User, UserSchema } from './users/user.model';
 import { UserModule } from "./users/user.module";
 
 @Module({

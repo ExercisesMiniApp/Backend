@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model, Query } from 'mongoose';
+
 import { UsersService } from './user.service';
 import { UsersController } from './users.controller';
 import { User } from './user.model';
