@@ -78,7 +78,9 @@ describe('UsersController', () => {
         message: 'User already exists',
       });
 
-      const execMock: ExecMock<User | null> = jest.fn().mockResolvedValue(existingUser);
+      const execMock: ExecMock<User | null> = jest
+        .fn()
+        .mockResolvedValue(existingUser);
       const findOneQuery: Query<User | null, User> = {
         exec: execMock,
       } as unknown as Query<User | null, User>;

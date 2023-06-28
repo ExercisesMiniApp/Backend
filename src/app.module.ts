@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { RateLimiterGuard, RateLimiterModule } from "nestjs-rate-limiter";
+import { RateLimiterGuard, RateLimiterModule } from 'nestjs-rate-limiter';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseService } from './database/database.service';
 
-import { UserModule } from "./users/user.module";
-import { APP_GUARD } from "@nestjs/core";
+import { UserModule } from './users/user.module';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -16,9 +16,13 @@ import { APP_GUARD } from "@nestjs/core";
     RateLimiterModule,
   ],
   controllers: [AppController],
-  providers: [AppService, DatabaseService, {
-    provide: APP_GUARD,
-    useClass: RateLimiterGuard,
-  },],
+  providers: [
+    AppService,
+    DatabaseService,
+    {
+      provide: APP_GUARD,
+      useClass: RateLimiterGuard,
+    },
+  ],
 })
 export class AppModule {}
