@@ -22,12 +22,12 @@ $ yarn run start:prod
 ## Test
 
 ```bash
-# unit tests
-$ yarn run tests
+# unit format.yml
+$ yarn run format.yml
 
-# e2e tests
-$ yarn run tests:e2e
+# e2e format.yml
+$ yarn run format.yml:e2e
 
-# tests coverage
-$ yarn run tests:cov
+# format.yml coverage
+$ yarn run format.yml:cov
 ```
