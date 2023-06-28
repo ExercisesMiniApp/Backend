@@ -5,16 +5,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseService } from './database/database.service';
 
-import { UsersController } from './users/users.controller';
-import { UsersService } from './users/user.service';
-import { User, UserSchema } from './users/user.model';
+// import { UsersController } from './users/users.controller';
+// import { UsersService } from './users/user.service';
+// import { User, UserSchema } from './users/user.model';
+import { UserModule } from "./users/user.module";
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://mongo:27017/exercises'),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    UserModule
   ],
-  controllers: [AppController, UsersController],
-  providers: [AppService, DatabaseService, UsersService],
+  controllers: [AppController],
+  providers: [AppService, DatabaseService],
 })
 export class AppModule {}
