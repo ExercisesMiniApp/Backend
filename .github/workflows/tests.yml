@@ -31,7 +31,17 @@ jobs:
         run: yarn install
 
       - name: Wait for MongoDB
-        run: yarn docker:up
+        run: |
+          timeout=60
+          while ! nc -z localhost 27017; do
+            echo "Waiting for MongoDB to be available..."
+            sleep 1
+            timeout=$(($timeout - 1))
+            if [ $timeout -eq 0 ]; then
+              echo "Timeout reached. MongoDB did not start."
+              exit 1
+            fi
+          done
 
       - name: Run tests
         run: yarn test
