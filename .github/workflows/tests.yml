@@ -1,23 +1,37 @@
 name: Tests
 
 on:
-  pull_request:
-    branches:
-      - '*'
   push:
     branches:
-      - '*'
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  format:
+  build:
     runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo
+        ports:
+          - 27017:27017
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
       - name: Install dependencies
         run: yarn install
+
+      - name: Wait for MongoDB
+        run: dockerize -wait tcp://localhost:27017 -timeout 1m
 
       - name: Run tests
         run: yarn test
