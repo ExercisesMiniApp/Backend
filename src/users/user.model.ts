@@ -1,4 +1,4 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema()
@@ -7,13 +7,13 @@ export class User extends Document {
   _id: number;
 
   @Prop()
-  firstname: string;
+  first_name: string;
 
   @Prop()
-  lastname: string;
+  last_name: string;
 
   @Prop()
-  role: string;
+  role: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

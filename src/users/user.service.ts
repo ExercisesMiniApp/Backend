@@ -2,23 +2,43 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { CreateUserDto } from './create-user.dto';
 import { User } from './user.model';
+import { CreateUserDto } from './create-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<User>,
+  ) {}
 
   async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
 
-  async findById(id: string): Promise<User> {
-    return this.userModel.findById(id).exec();
-  }
-
   async create(user: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(user);
     return createdUser.save();
+  }
+
+  async checkUser(userId: string): Promise<any> {
+    const isValidUserId = /^\d{1,9}$/.test(userId);
+
+    if (!isValidUserId) {
+      return { error: 'Invalid User ID' };
+    }
+
+    const existingUser = await this.userModel.findOne({ _id: userId }).exec();
+
+    if (existingUser) {
+      return { message: 'User already exists' };
+    } else {
+      return { error: 'User not found' };
+    }
+  }
+
+  async getCollections(): Promise<any> {
+    const collections = await this.userModel.db.db.listCollections().toArray();
+    const collectionNames = collections.map((collection) => collection.name);
+    return { collections: collectionNames };
   }
 }
