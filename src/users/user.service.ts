@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -21,16 +21,20 @@ export class UsersService {
   }
 
   async checkUser(userId: string): Promise<any> {
+    if(!userId){
+      throw new HttpException('No ID', HttpStatus.BAD_REQUEST)
+    }
+
     const isValidUserId = /^\d{1,9}$/.test(userId);
 
     if (!isValidUserId) {
-      return { error: 'Invalid User ID' };
+      throw new HttpException('Invalid ID', HttpStatus.BAD_REQUEST)
     }
 
     const existingUser = await this.userModel.findOne({ _id: userId }).exec();
 
     if (existingUser) {
-      return { message: 'User already exists' };
+      throw new HttpException('Exist', HttpStatus.OK)
     } else {
       throw new NotFoundException('User not found');
     }
