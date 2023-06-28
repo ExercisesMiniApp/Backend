@@ -7,13 +7,7 @@ export class User {
   _id: number;
 
   @Prop()
-  firstName: string;
-
-  @Prop()
-  lastName: string;
-
-  @Prop()
-  role: string;
+  role: 0 | 1;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

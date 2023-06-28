@@ -38,8 +38,8 @@ describe('UsersController', () => {
   describe('findAll', () => {
     it('should return an array of users', async () => {
       const expectedUsers: User[] = [
-        { _id: 1, firstName: 'John', lastName: 'Doe', role: 'admin' },
-        { _id: 2, firstName: 'Jane', lastName: 'Smith', role: 'user' },
+        { _id: 1, role: 0 },
+        { _id: 2, role: 1 },
       ];
       jest.spyOn(usersService, 'findAll').mockResolvedValue(expectedUsers);
 
@@ -53,15 +53,11 @@ describe('UsersController', () => {
     it('should create a new user', async () => {
       const createUserDto: CreateUserDto = {
         _id: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        role: 'admin',
+        role: 1,
       };
       const createdUser: User = {
-        _id: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        role: 'admin',
+        _id: 2,
+        role: 1,
       };
       jest.spyOn(usersService, 'create').mockResolvedValue(createdUser);
 
@@ -75,9 +71,7 @@ describe('UsersController', () => {
     it('should return "User already exists" if user exists', async () => {
       const existingUser: User = {
         _id: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        role: 'admin',
+        role: 1,
       };
 
       jest.spyOn(usersService, 'checkUser').mockResolvedValue({
