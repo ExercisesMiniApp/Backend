@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { RateLimit } from "nestjs-rate-limiter";
 
 import { UsersService } from './user.service';
 import { User } from './user.model';
@@ -18,6 +19,7 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @RateLimit({ keyPrefix: 'check-user', points: 10, duration: 60, errorMessage: 'Too many uploads' })
   @Get('/check-user')
   async checkUser(@Query('_id') userId: string): Promise<any> {
     return this.usersService.checkUser(userId);
