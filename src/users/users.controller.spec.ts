@@ -1,11 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-
+import { Model, Query } from 'mongoose';
 import { UsersService } from './user.service';
 import { UsersController } from './users.controller';
 import { User } from './user.model';
 import { CreateUserDto } from './create-user.dto';
+
+type ExecMock<T> = jest.Mock<Promise<T>, []>;
 
 describe('UsersController', () => {
   let usersController: UsersController;
@@ -77,12 +78,17 @@ describe('UsersController', () => {
         lastName: 'Doe',
         role: 'admin',
       };
+
       jest.spyOn(usersService, 'checkUser').mockResolvedValue({
         message: 'User already exists',
       });
-      jest.spyOn(userModel, 'findOne').mockReturnValue({
-        exec: jest.fn().mockResolvedValue(existingUser) as any, // Приведение типа
-      } as any); // Приведение типа
+
+      const execMock: ExecMock<User | null> = jest.fn().mockResolvedValue(existingUser);
+      const findOneQuery: Query<User | null, User> = {
+        exec: execMock,
+      } as unknown as Query<User | null, User>;
+
+      jest.spyOn(userModel, 'findOne').mockReturnValue(findOneQuery);
 
       const result = await usersController.checkUser('1');
 
