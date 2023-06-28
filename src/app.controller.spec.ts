@@ -1,9 +1,9 @@
-import { MongooseModule } from "@nestjs/mongoose";
-import { AppService } from "./app.service";
-import { AppController } from "./app.controller";
-import { DatabaseService } from "./database/database.service";
-import { User, UserSchema } from "./users/user.model";
-import { Test } from "@nestjs/testing";
+import { MongooseModule } from '@nestjs/mongoose';
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
+import { DatabaseService } from './database/database.service';
+import { User, UserSchema } from './users/user.model';
+import { Test } from '@nestjs/testing';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -31,7 +31,9 @@ describe('AppController', () => {
     }, 10000);
 
     it('should return the database connection status', async () => {
-      jest.spyOn(appService, 'checkDatabaseConnection').mockResolvedValue('Database connection is successful.');
+      jest
+        .spyOn(appService, 'checkDatabaseConnection')
+        .mockResolvedValue('Database connection is successful.');
 
       const result = await appController.checkDatabaseConnection();
 
