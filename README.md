@@ -7,6 +7,7 @@
 ```bash
 $ yarn install
 ```
+#### Install docker compose. See [docs](https://docs.docker.com/compose/install/)
 
 ## Running the app
 
@@ -19,17 +20,17 @@ $ yarn run start:dev
 
 # production mode
 $ yarn run start:prod
+
+# in the Docker container
+$ yarn docker:up
 ```
 
 ## Test
 
 ```bash
-# unit format.yml
-$ yarn run format.yml
+# all tests
+$ yarn test
 
-# e2e format.yml
-$ yarn run format.yml:e2e
-
-# format.yml coverage
-$ yarn run format.yml:cov
+# tests coverage
+$ yarn test:cov
 ```
