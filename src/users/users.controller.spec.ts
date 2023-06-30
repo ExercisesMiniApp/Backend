@@ -6,6 +6,7 @@ import { UsersService } from './user.service';
 import { UsersController } from './users.controller';
 import { User } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
+import { HttpException } from "@nestjs/common";
 
 type ExecMock<T> = jest.Mock<Promise<T>, []>;
 
@@ -75,7 +76,7 @@ describe('UsersController', () => {
       };
 
       jest.spyOn(usersService, 'checkUser').mockResolvedValue({
-        message: 'User already exists',
+        message: 'User already exists', statusCode: 200
       });
 
       const execMock: ExecMock<User | null> = jest
@@ -89,7 +90,7 @@ describe('UsersController', () => {
 
       const result = await usersController.checkUser('1');
 
-      expect(result).toEqual({ message: 'User already exists' });
+      expect(result).toEqual({ message: 'User already exists', statusCode: 200 });
     });
   });
 });

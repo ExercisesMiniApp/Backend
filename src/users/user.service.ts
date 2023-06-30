@@ -25,7 +25,7 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async checkUser(userId: string): Promise<string> {
+  async checkUser(userId: string): Promise<{ message: string, statusCode: number }> {
     if (!userId) {
       throw new HttpException('No ID', HttpStatus.BAD_REQUEST);
     }
@@ -39,7 +39,7 @@ export class UsersService {
     const existingUser = await this.userModel.findOne({ _id: userId }).exec();
 
     if (existingUser) {
-      throw new HttpException('Exist', HttpStatus.OK);
+      throw new HttpException('User already exists', HttpStatus.OK);
     } else {
       throw new NotFoundException('User not found');
     }

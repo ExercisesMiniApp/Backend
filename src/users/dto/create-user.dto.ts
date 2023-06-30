@@ -1,6 +1,4 @@
-import { UserModel } from '../user.model';
-
-export class CreateUserDto extends UserModel {
+export class CreateUserDto {
   _id: number;
   role: 0 | 1;
 }
