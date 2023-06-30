@@ -1,4 +1,4 @@
-name: Format
+name: Eslint
 
 on:
   pull_request:
@@ -20,4 +20,4 @@ jobs:
         run: yarn install
 
       - name: Format code
-        run: yarn format
+        run: yarn eslint

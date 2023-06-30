@@ -6,9 +6,6 @@ import { UsersService } from './user.service';
 import { UsersController } from './users.controller';
 import { User } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
-import { HttpException } from "@nestjs/common";
-
-type ExecMock<T> = jest.Mock<Promise<T>, []>;
 
 describe('UsersController', () => {
   let usersController: UsersController;
@@ -79,9 +76,10 @@ describe('UsersController', () => {
         message: 'User already exists', statusCode: 200
       });
 
-      const execMock: ExecMock<User | null> = jest
-        .fn()
-        .mockResolvedValue(existingUser);
+      const execMock = jest.fn(() => ({
+        exec: () => Promise.resolve(existingUser),
+      }));
+
       const findOneQuery: Query<User | null, User> = {
         exec: execMock,
       } as unknown as Query<User | null, User>;

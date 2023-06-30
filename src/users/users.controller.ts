@@ -26,12 +26,12 @@ export class UsersController {
     errorMessage: 'Too many uploads',
   })
   @Get('/check-user')
-  async checkUser(@Query('_id') userId: string): Promise<any> {
+  async checkUser(@Query('_id') userId: string): Promise<{ message: string, statusCode: number }> {
     return this.usersService.checkUser(userId);
   }
 
   @Get('/collections')
-  async getCollections(): Promise<any> {
+  async getCollections(): Promise<{ collections: string[] }> {
     return this.usersService.getCollections();
   }
 }

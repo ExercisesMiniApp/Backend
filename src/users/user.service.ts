@@ -47,7 +47,7 @@ export class UsersService {
 
   async getCollections(): Promise<{ collections: string[] }> {
     const collections = await this.userModel.db.db.listCollections().toArray();
-    const collectionNames = collections.map((collection) => collection.name);
+    const collectionNames: string[] = collections.map((collection) => collection.name);
     return { collections: collectionNames };
   }
 }
