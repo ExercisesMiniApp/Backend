@@ -8,7 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { User } from './user.model';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -25,7 +25,7 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async checkUser(userId: string): Promise<any> {
+  async checkUser(userId: string): Promise<string> {
     if (!userId) {
       throw new HttpException('No ID', HttpStatus.BAD_REQUEST);
     }
@@ -45,7 +45,7 @@ export class UsersService {
     }
   }
 
-  async getCollections(): Promise<any> {
+  async getCollections(): Promise<{ collections: string[] }> {
     const collections = await this.userModel.db.db.listCollections().toArray();
     const collectionNames = collections.map((collection) => collection.name);
     return { collections: collectionNames };

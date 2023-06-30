@@ -3,7 +3,7 @@ import { RateLimit } from 'nestjs-rate-limiter';
 
 import { UsersService } from './user.service';
 import { User } from './user.model';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
