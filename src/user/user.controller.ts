@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiProperty, ApiOkResponse, ApiResponse } from '@nestjs/swagger';
 import { RateLimit } from 'nestjs-rate-limiter';
 
@@ -6,13 +6,18 @@ import { UsersService } from './user.service';
 import { User } from './user.model';
 import { CollectionsResponse, CreateUserDto, UserResponse } from './dto';
 import { InvalidIDResponse, NoIDResponse, NotFoundResponse, OKResponse, Property, RateLimitResponse } from './user.doc';
+import { AuthGuard } from '../auth/auth.guard';
+
+import { Public, Roles, SecretToken } from '../guards';
 
 @Controller('users')
 @ApiTags('Users')
-export class UsersController {
+export class UserController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
+  @UseGuards(SecretToken)
+  @Public()
+  @Get('all')
   @ApiOperation({ summary: 'Get all user' })
   @ApiOkResponse({
     description: 'Returns an array of user',
@@ -23,6 +28,7 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @UseGuards(SecretToken)
   @Post()
   @ApiOperation({ summary: 'Create a user' })
   @ApiProperty({
@@ -32,10 +38,11 @@ export class UsersController {
     description: 'User successfully created',
     type: User,
   })
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<string> {
     return this.usersService.create(createUserDto);
   }
 
+  @Public()
   @RateLimit({
     keyPrefix: 'check-user',
     points: 10,
@@ -54,6 +61,8 @@ export class UsersController {
     return this.usersService.checkUser(userId);
   }
 
+  @UseGuards(AuthGuard)
+  @Roles(1)
   @Get('/collections')
   @ApiOperation({ summary: 'Get collections' })
   @ApiOkResponse({

@@ -9,6 +9,9 @@ export class UserResponse {
 
   @ApiProperty({ type: Number })
   statusCode: number;
+
+  @ApiProperty({ type: String })
+  token?: string;
 }
 
 export class CollectionsResponse {
