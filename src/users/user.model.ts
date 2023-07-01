@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
 
 @Schema()
 export class User {
@@ -11,4 +10,3 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-export const UserModel = mongoose.model<User>('User', UserSchema);

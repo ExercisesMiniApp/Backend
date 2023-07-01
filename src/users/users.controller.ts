@@ -1,23 +1,10 @@
 import { Controller, Get, Post, Body, Query } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiProperty, ApiOkResponse, ApiNotFoundResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiProperty, ApiOkResponse, ApiResponse } from '@nestjs/swagger';
 import { RateLimit } from 'nestjs-rate-limiter';
 
 import { UsersService } from './user.service';
 import { User } from './user.model';
-import { CreateUserDto } from './dto/create-user.dto';
-
-class UserExistsResponse {
-  @ApiProperty({ type: String })
-  message: string;
-
-  @ApiProperty({ type: Number })
-  statusCode: number;
-}
-
-class CollectionsResponse {
-  @ApiProperty({ type: [String] })
-  collections: string[];
-}
+import { CollectionsResponse, CreateUserDto, UserExistsResponse } from './dto';
 
 @Controller('users')
 @ApiTags('Users')
@@ -62,16 +49,9 @@ export class UsersController {
     required: true,
     description: 'User ID',
   })
-  @ApiOkResponse({
-    description: 'User already exists',
-    type: UserExistsResponse,
-    status: 200
-  })
-  @ApiNotFoundResponse({
-    description: 'User not found',
-    type: UserExistsResponse,
-    status: 404
-  })
+  @ApiResponse({ status: 200, description: 'Checks if a user exists' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @ApiResponse({ status: 400, description: 'Invalid ID or No ID' })
   async checkUser(@Query('_id') userId: string): Promise<UserExistsResponse> {
     return this.usersService.checkUser(userId);
   }
