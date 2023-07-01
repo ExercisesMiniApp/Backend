@@ -21,7 +21,7 @@ module.exports = {
         '@typescript-eslint/no-misused-promises': 'off',
         quotes: ['error', 'single'],
         indent: 'off',
-        "object-curly-spacing": ["error", "always"]
+        "object-curly-spacing": ["error", "always"],
       },
       parserOptions: {
         project: ['./tsconfig.json'],
