@@ -34,5 +34,5 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-./src/auth/constants.ts
-./src/guards/SecretToken/secret.service.ts
+src/auth/constants.ts
+src/guards/SecretToken/secret.service.ts
