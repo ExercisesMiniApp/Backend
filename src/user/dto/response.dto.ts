@@ -1,8 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserExistsResponse {
+export class UserResponse {
   @ApiProperty({ type: String })
   message: string;
+
+  @ApiProperty({ type: String })
+  error?: string;
 
   @ApiProperty({ type: Number })
   statusCode: number;

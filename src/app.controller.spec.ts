@@ -2,7 +2,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { DatabaseService } from './database/database.service';
-import { User, UserSchema } from './users/user.model';
+import { User, UserSchema } from './user/user.model';
 import { Test } from '@nestjs/testing';
 
 describe('AppController', () => {

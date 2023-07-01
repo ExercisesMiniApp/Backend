@@ -4,7 +4,8 @@ import { RateLimit } from 'nestjs-rate-limiter';
 
 import { UsersService } from './user.service';
 import { User } from './user.model';
-import { CollectionsResponse, CreateUserDto, UserExistsResponse } from './dto';
+import { CollectionsResponse, CreateUserDto, UserResponse } from './dto';
+import { InvalidIDResponse, NoIDResponse, NotFoundResponse, OKResponse, Property, RateLimitResponse } from './user.doc';
 
 @Controller('users')
 @ApiTags('Users')
@@ -12,9 +13,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Get all users' })
+  @ApiOperation({ summary: 'Get all user' })
   @ApiOkResponse({
-    description: 'Returns an array of users',
+    description: 'Returns an array of user',
     type: User,
     isArray: true,
   })
@@ -43,16 +44,13 @@ export class UsersController {
   })
   @Get('/check-user')
   @ApiOperation({ summary: 'Check if a user exists' })
-  @ApiProperty({
-    type: String,
-    name: '_id',
-    required: true,
-    description: 'User ID',
-  })
-  @ApiResponse({ status: 200, description: 'Checks if a user exists' })
-  @ApiResponse({ status: 404, description: 'User not found' })
-  @ApiResponse({ status: 400, description: 'Invalid ID or No ID' })
-  async checkUser(@Query('_id') userId: string): Promise<UserExistsResponse> {
+  @ApiProperty(Property)
+  @ApiResponse(OKResponse)
+  @ApiResponse(NotFoundResponse)
+  @ApiResponse(NoIDResponse)
+  @ApiResponse(InvalidIDResponse)
+  @ApiResponse(RateLimitResponse)
+  async checkUser(@Query('_id') userId: string): Promise<UserResponse> {
     return this.usersService.checkUser(userId);
   }
 

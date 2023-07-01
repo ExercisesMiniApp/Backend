@@ -34,7 +34,7 @@ describe('UsersController', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of users', async () => {
+    it('should return an array of user', async () => {
       const expectedUsers: User[] = [
         { _id: 1, role: 0 },
         { _id: 2, role: 1 },
