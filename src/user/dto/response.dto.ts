@@ -12,6 +12,9 @@ export class UserResponse {
 
   @ApiProperty({ type: String })
   token?: string;
+
+  @ApiProperty({ type: String })
+  role?: number;
 }
 
 export class CollectionsResponse {

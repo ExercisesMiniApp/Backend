@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SecretService } from "./secret.service";
+import { SecretService } from './secret.service';
 
 @Module({
   providers: [

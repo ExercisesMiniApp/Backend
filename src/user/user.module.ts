@@ -6,7 +6,7 @@ import { UsersService } from './user.service';
 import { User, UserSchema } from './user.model';
 
 import { SecretService } from '../guards';
-import { SecretModule } from "../guards/SecretToken/secret.module";
+import { SecretModule } from '../guards/SecretToken/secret.module';
 
 @Module({
   imports: [

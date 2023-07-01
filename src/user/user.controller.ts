@@ -29,6 +29,7 @@ export class UserController {
   }
 
   @UseGuards(SecretToken)
+  @Public()
   @Post()
   @ApiOperation({ summary: 'Create a user' })
   @ApiProperty({

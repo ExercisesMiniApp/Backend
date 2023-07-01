@@ -46,6 +46,7 @@ export class UsersService {
         message: 'User found',
         statusCode: HttpStatus.OK,
         token: await this.createToken(existingUser),
+        role: existingUser.role,
       };
     } else {
       throw new NotFoundException('User not found');
