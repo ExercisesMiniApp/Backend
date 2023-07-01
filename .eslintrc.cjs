@@ -20,6 +20,8 @@ module.exports = {
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/no-misused-promises': 'off',
         quotes: ['error', 'single'],
+        indent: 'off',
+        "object-curly-spacing": ["error", "always"]
       },
       parserOptions: {
         project: ['./tsconfig.json'],
