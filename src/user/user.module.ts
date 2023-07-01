@@ -5,23 +5,18 @@ import { UserController } from './user.controller';
 import { UsersService } from './user.service';
 import { User, UserSchema } from './user.model';
 
-import { SecretToken } from '../guards';
-import { SecretTokenProvider } from '../guards/SecretTokenProvider';
+import { SecretService } from '../guards';
+import { SecretModule } from "../guards/SecretToken/secret.module";
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    SecretModule,
   ],
   controllers: [UserController],
   providers: [
     UsersService,
-    SecretToken,
-    SecretTokenProvider,
-    {
-      provide: 'SECRET_TOKEN',
-      useFactory: (secretTokenProvider: SecretTokenProvider) => secretTokenProvider.getSecretToken(),
-      inject: [SecretTokenProvider],
-    },
+    SecretService,
   ],
   exports: [UsersService, MongooseModule],
 })
