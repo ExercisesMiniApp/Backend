@@ -9,12 +9,11 @@ import { InvalidIDResponse, NoIDResponse, NotFoundResponse, OKResponse, Property
 
 import { Public, Roles, SecretToken } from '../guards';
 import { GroupModule } from '../group/group.module';
-import { GroupService } from '../group/group.service';
 
 @Controller('users')
 @ApiTags('Users')
 export class UserController {
-  constructor(private readonly usersService: UsersService, private readonly groupService: GroupService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @UseGuards(SecretToken)
   @Public()
@@ -69,6 +68,6 @@ export class UserController {
   async getUserGroups(
     @Param('userId') userId: number,
     @Param('userRole') userRole: number): Promise<GroupModule[]> {
-    return this.groupService.getGroupsByUser(userId, userRole);
+    return this.usersService.getUserGroups(userId, userRole);
   }
 }
