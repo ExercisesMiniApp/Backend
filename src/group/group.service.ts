@@ -1,6 +1,6 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { User } from '../user/user.model';
+
 import { GroupModule } from './group.module';
 
 @Injectable()
@@ -9,13 +9,23 @@ export class GroupService {
     @Inject('GroupModel') private readonly groupModel: Model<GroupModule>,
   ) {}
 
-  async createGroup(name: string, trainer: User, participants: User[]): Promise<GroupModule> {
+  async createGroup(name: string, trainerId: number, participantIds: number[]): Promise<GroupModule> {
     const group = new this.groupModel({
       name,
-      trainer: trainer._id,
-      participants: participants.map(participant => participant._id),
+      trainer: trainerId,
+      participants: participantIds,
     });
 
     return group.save();
+  }
+
+  async getGroupsByUser(userId: number, userRole: number): Promise<GroupModule[]> {
+    if (userRole === 0) {
+      return this.groupModel.find({ participants: userId }).exec();
+    } else if (userRole === 1) {
+      return this.groupModel.find({ trainer: userId }).exec();
+    } else {
+      throw new HttpException('Invalid user role', HttpStatus.BAD_REQUEST);
+    }
   }
 }

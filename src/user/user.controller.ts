@@ -1,19 +1,20 @@
-import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiProperty, ApiOkResponse, ApiResponse } from '@nestjs/swagger';
 import { RateLimit } from 'nestjs-rate-limiter';
 
 import { UsersService } from './user.service';
 import { User } from './user.model';
-import { CollectionsResponse, CreateUserDto, UserResponse } from './dto';
+import { CreateUserDto, UserResponse } from './dto';
 import { InvalidIDResponse, NoIDResponse, NotFoundResponse, OKResponse, Property, RateLimitResponse } from './user.doc';
-import { AuthGuard } from '../auth/auth.guard';
 
 import { Public, Roles, SecretToken } from '../guards';
+import { GroupModule } from '../group/group.module';
+import { GroupService } from '../group/group.service';
 
 @Controller('users')
 @ApiTags('Users')
 export class UserController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService, private readonly groupService: GroupService) {}
 
   @UseGuards(SecretToken)
   @Public()
@@ -62,21 +63,12 @@ export class UserController {
     return this.usersService.checkUser(userId);
   }
 
-  @UseGuards(AuthGuard)
-  @Roles(1)
-  @Get('/collections')
-  @ApiOperation({ summary: 'Get collections' })
-  @ApiOkResponse({
-    description: 'Returns an array of collection names',
-    type: CollectionsResponse,
-    status: 200,
-    schema: {
-      example: {
-        collections: ['collection1', 'collection2', 'collection3']
-      }
-    }
-  })
-  async getCollections(): Promise<CollectionsResponse> {
-    return this.usersService.getCollections();
+  // @UseGuards(AuthGuard)
+  @Roles(1, 0)
+  @Get('user/:userId/:userRole')
+  async getUserGroups(
+    @Param('userId') userId: number,
+    @Param('userRole') userRole: number): Promise<GroupModule[]> {
+    return this.groupService.getGroupsByUser(userId, userRole);
   }
 }

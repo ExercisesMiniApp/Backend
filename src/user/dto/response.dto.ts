@@ -16,8 +16,3 @@ export class UserResponse {
   @ApiProperty({ type: Number, required: false })
   role?: number;
 }
-
-export class CollectionsResponse {
-  @ApiProperty({ type: [String] })
-  collections: string[];
-}

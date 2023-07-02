@@ -7,11 +7,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseService } from './database/database.service';
 import { UserModule } from './user/user.module';
+import { GroupModule } from './group/group.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://mongo:27017/exercises'),
     UserModule,
+    GroupModule,
     RateLimiterModule,
   ],
   controllers: [AppController],

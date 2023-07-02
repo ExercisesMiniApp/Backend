@@ -10,7 +10,7 @@ export class Group {
   trainer: Types.ObjectId;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
-  participants: Types.ObjectId[];
+  participants?: Types.ObjectId[];
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);

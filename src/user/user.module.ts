@@ -8,13 +8,15 @@ import { User, UserSchema } from './user.model';
 
 import { SecretService } from '../guards';
 import { SecretModule } from '../guards/SecretToken/secret.module';
+import { GroupModule } from '../group/group.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     SecretModule,
+    GroupModule,
     JwtModule.register({
-      secret: 'asdasdasdasd', // Replace with your actual secret key
+      secret: 'asdasdasdasd',
       signOptions: { expiresIn: '60s' },
     }),
   ],

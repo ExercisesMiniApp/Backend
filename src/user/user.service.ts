@@ -7,12 +7,15 @@ import crypto from 'crypto';
 import { CreateUserDto, UserResponse } from './dto';
 
 import { User } from './user.model';
+import { GroupModule } from '../group/group.module';
+import { GroupService } from '../group/group.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
-    private jwtService: JwtService,
+    private readonly jwtService: JwtService,
+    private readonly groupService: GroupService,
   ) {}
 
   async findOne(_id: number): Promise<User | undefined> {
@@ -61,10 +64,8 @@ export class UsersService {
     }
   }
 
-  async getCollections(): Promise<{ collections: string[] }> {
-    const collections = await this.userModel.db.db.listCollections().toArray();
-    const collectionNames: string[] = collections.map((collection) => collection.name);
-    return { collections: collectionNames };
+  async getUserGroups(userId: number, userRole: number): Promise<GroupModule[]> {
+    return this.groupService.getGroupsByUser(userId, userRole);
   }
 
   private async createToken(user: User): Promise<string> {
@@ -80,7 +81,6 @@ export class UsersService {
     const cipher = crypto.createCipheriv('aes-256-cbc', secretKey, iv);
     let encryptedToken = cipher.update(token, 'utf8', 'hex');
     encryptedToken += cipher.final('hex');
-
 
     return `Bearer ${encryptedToken}`;
   }

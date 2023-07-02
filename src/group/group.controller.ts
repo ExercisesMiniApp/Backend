@@ -1,6 +1,6 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
+
 import { GroupService } from './group.service';
-import { User } from '../user/user.model';
 import { GroupModule } from './group.module';
 
 @Controller('groups')
@@ -9,12 +9,20 @@ export class GroupController {
     private readonly groupService: GroupService,
   ) {}
 
-  @Post()
+  @Post('create')
   async createGroup(
     @Body('name') name: string,
-    @Body('trainer') trainer: User,
-    @Body('participants') participants: User[],
+    @Body('trainer') trainer: number,
+    @Body('participants') participants: number[],
   ): Promise<GroupModule> {
     return this.groupService.createGroup(name, trainer, participants);
+  }
+
+  @Get('find')
+  async getGroupsByUser(
+    @Body('userId') userId: number,
+    @Body('userRole') userRole: number,
+  ): Promise<GroupModule[]> {
+    return this.groupService.getGroupsByUser(userId, userRole)
   }
 }
