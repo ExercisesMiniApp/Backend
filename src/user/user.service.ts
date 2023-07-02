@@ -2,8 +2,10 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
+import crypto from 'crypto';
 
 import { CreateUserDto, UserResponse } from './dto';
+
 import { User } from './user.model';
 
 @Injectable()
@@ -21,11 +23,18 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-  async create(user: CreateUserDto): Promise<string> {
+  async create(user: CreateUserDto): Promise<UserResponse> {
     const createdUser = new this.userModel(user);
     const savedUser = await createdUser.save();
 
-    return await this.createToken(savedUser);
+    const token = await this.createToken(savedUser);
+
+    return {
+      message: 'User created',
+      statusCode: HttpStatus.CREATED,
+      token,
+      role: savedUser.role,
+    };
   }
 
   async checkUser(userId: string): Promise<UserResponse> {
@@ -45,7 +54,6 @@ export class UsersService {
       return {
         message: 'User found',
         statusCode: HttpStatus.OK,
-        token: await this.createToken(existingUser),
         role: existingUser.role,
       };
     } else {
@@ -61,6 +69,19 @@ export class UsersService {
 
   private async createToken(user: User): Promise<string> {
     const payload = { sub: user._id, role: user.role };
-    return await this.jwtService.signAsync(payload);
+    const token = await this.jwtService.signAsync(payload);
+
+    return this.encryptToken(token);
+  }
+
+  private encryptToken(token: string): string {
+    const secretKey = crypto.randomBytes(32);
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-cbc', secretKey, iv);
+    let encryptedToken = cipher.update(token, 'utf8', 'hex');
+    encryptedToken += cipher.final('hex');
+
+
+    return `Bearer ${encryptedToken}`;
   }
 }
