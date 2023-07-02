@@ -4,7 +4,7 @@ export class UserResponse {
   @ApiProperty({ type: String })
   message: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, required: false })
   error?: string;
 
   @ApiProperty({ type: Number })
@@ -13,7 +13,7 @@ export class UserResponse {
   @ApiProperty({ type: String })
   token?: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: Number, required: false })
   role?: number;
 }
 

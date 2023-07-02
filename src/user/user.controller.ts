@@ -39,7 +39,7 @@ export class UserController {
     description: 'User successfully created',
     type: User,
   })
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<string> {
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<UserResponse> {
     return this.usersService.create(createUserDto);
   }
 
