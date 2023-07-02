@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule } from '@nestjs/jwt';
 
 import { UserController } from './user.controller';
 import { UsersService } from './user.service';
@@ -12,6 +13,10 @@ import { SecretModule } from '../guards/SecretToken/secret.module';
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     SecretModule,
+    JwtModule.register({
+      secret: 'asdasdasdasd', // Replace with your actual secret key
+      signOptions: { expiresIn: '60s' },
+    }),
   ],
   controllers: [UserController],
   providers: [

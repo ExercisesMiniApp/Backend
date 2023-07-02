@@ -60,7 +60,7 @@ export class UsersService {
   }
 
   private async createToken(user: User): Promise<string> {
-    const payload = { sub: user._id };
+    const payload = { sub: user._id, role: user.role };
     return await this.jwtService.signAsync(payload);
   }
 }
