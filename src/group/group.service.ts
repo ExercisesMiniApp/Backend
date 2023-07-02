@@ -20,9 +20,9 @@ export class GroupService {
   }
 
   async getGroupsByUser(userId: number, userRole: number): Promise<GroupModule[]> {
-    if (userRole === 0) {
+    if (Number(userRole) === 0) {
       return this.groupModel.find({ participants: userId }).exec();
-    } else if (userRole === 1) {
+    } else if (Number(userRole) === 1) {
       return this.groupModel.find({ trainer: userId }).exec();
     } else {
       throw new HttpException('Invalid user role', HttpStatus.BAD_REQUEST);
