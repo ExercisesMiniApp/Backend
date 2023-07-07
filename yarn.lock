@@ -722,14 +722,14 @@
     webpack "5.88.1"
     webpack-node-externals "3.0.0"
 
-"@nestjs/common@10.0.3":
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-10.0.3.tgz#998b80884b9c9ffd54f7e51105612cf5e47a63dc"
-  integrity sha512-Zv59rDQMuwyja8fvnQelG4AbEe7FEC2ZUXcUwE6Tw0aOHx5CaOBIU426FCYY9o3iqJX3xLCKVJ8NrLPg58xCZg==
+"@nestjs/common@10.0.5":
+  version "10.0.5"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-10.0.5.tgz#2d834f1713b16d66f514c969b915fd6e020de391"
+  integrity sha512-0E+SBI+SKswXbFG+Nwtnctrei5dvdFJ7b9/fQDL6KzDBtZwsglJpD86S3ooxnc7ek4vRG57oN2iLmMTjrcesMg==
   dependencies:
     uid "2.0.2"
     iterare "1.2.1"
-    tslib "2.5.3"
+    tslib "2.6.0"
 
 "@nestjs/core@10.0.5":
   version "10.0.5"
@@ -794,12 +794,12 @@
     path-to-regexp "3.2.0"
     swagger-ui-dist "5.1.0"
 
-"@nestjs/testing@^10.0.0":
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-10.0.3.tgz#0301b1710e55d3a4924fced9893ac40b0fb7dae2"
-  integrity sha512-Rhm+E7yr499DIOuYbqskdNVo/NJjLKDS7Wp6NWl37woef4u7eVsSKN8VUCXKxNlYUrSw2Nu2AekpLzvl169SXg==
+"@nestjs/testing@^10.0.5":
+  version "10.0.5"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-10.0.5.tgz#31cac7b9816351dff7706b3ff9af0387cf608f4b"
+  integrity sha512-TQcFOxR+kIibMbYg71yajic3289/Iw7B5LliYiZ4Pz36BZvU0TRMYqpxaGAlX/Srk0BCpP99ZHoofm8dqZKmxw==
   dependencies:
-    tslib "2.5.3"
+    tslib "2.6.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
