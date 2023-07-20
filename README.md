@@ -1,6 +1,5 @@
 # Backend for VK Mini App
 [![Tests](https://github.com/ExercisesMiniApp/Backend/actions/workflows/tests.yml/badge.svg)](https://github.com/ExercisesMiniApp/Backend/actions/workflows/tests.yml)
-[![Format](https://github.com/ExercisesMiniApp/Backend/actions/workflows/format.yml/badge.svg)](https://github.com/ExercisesMiniApp/Backend/actions/workflows/format.yml)
 
 ## Installation
 
