@@ -26,7 +26,7 @@
     "@nestjs/jwt": "^10.1.0",
     "@nestjs/mongoose": "^10.0.0",
     "@nestjs/platform-express": "10.0.5",
-    "@nestjs/swagger": "^7.1.1",
+    "@nestjs/swagger": "^7.1.12",
     "crypto": "^1.0.1",
     "mongoose": "^7.3.3",
     "nestjs-rate-limiter": "^3.1.0",
